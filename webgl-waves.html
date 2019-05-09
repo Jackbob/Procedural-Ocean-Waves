@@ -92,7 +92,7 @@
             <input type="checkbox" id="filter" /></div>
           <div>
             <label for="oceanresolution">Ocean Resolution</label>
-            <input type="range" min="0" max="100" id="oceanresolution"/>
+            <input type="range" min="1" max="100" id="oceanresolution"/>
           </div>
           <div>
               <label for="timescale">Time Scale</label>
@@ -100,15 +100,15 @@
           </div>
           <div>
             <label for="rotationspeed">Rotation Speed</label>
-            <input type="range" min="0" max="1000" id="rotationspeed"/>
+            <input type="range" min="0" max="50" id="rotationspeed"/>
           </div>
           <div>
               <label for="zoom">Zoom</label>
-              <input type="range" min="-6" max="8" id="zoom"/>
+              <input type="range" min="1" max="50" id="zoom"/>
           </div>
           <div>
               <label for="waveamp">Wave Amplitude</label>
-              <input type="range" min="0" max="1000" id="waveamp"/>
+              <input type="range" min="0" max="100" id="waveamp"/>
           </div>
         </div>
     </div>
@@ -245,9 +245,10 @@ void main() {
               var z = (j - resolution/2)*steplength;
               arrays.position.push([x, 0, z]);
               arrays.normal.push([0, 1, 0]);
-              arrays.texcoord.push([0, 0]);
+              arrays.texcoord.push([0,0]);
           }
       }
+      arrays.texcoord.pop();
 
       for (var j=0; j<resolution; ++j) 
       {
@@ -265,8 +266,8 @@ void main() {
       bufferInfo = twgl.createBufferInfoFromArrays(gl, arrays);
     }
 
-    let oceanresolution = 50;
-    generateOceanGrid(oceanresolution);
+    var oceanresolution = 20;
+    //generateOceanGrid(oceanresolution);
     const oe = document.querySelector("#oceanresolution");
     oe.value = oceanresolution;
     oe.addEventListener('input', e => {
@@ -274,19 +275,18 @@ void main() {
       generateOceanGrid(oceanresolution);
     });
 
-    let zoom = 1;
+    var zoom = 1;
     const ze = document.querySelector("#zoom");
-    ze.value = zoom;
+    ze.value = zoom * 10;
     ze.addEventListener('input', e => {
-      zoom = e.target.value;
-      if(zoom < 0){zoom =  1.0 / abs(zoom);}
+      zoom = e.target.value / 10;
     });
 
-    var rotationspeed = 0.00003;
+    var rotationspeed = 4;
     const re = document.querySelector("#rotationspeed");
-    re.value = rotationspeed * 100000;
+    re.value = rotationspeed;
     re.addEventListener('input', e => {
-      rotationspeed = e.target.value / 10000000;
+      rotationspeed = e.target.value;
     });
 
     var timescale = 1;
@@ -300,16 +300,14 @@ void main() {
     var waveamp = 0.025;
     const we = document.querySelector("#waveamp");
     we.value = waveamp * 1000;
-    re.addEventListener('input', e => {
-      rotationspeed = e.target.value / 1000;
+    we.addEventListener('input', e => {
+      waveamp = e.target.value / 1000;
     });
 
     var prevTime = 0.0;
     var rot = 0.0;
 
     function render(time) {
-      
-
       var deltatime = time - prevTime;
 
       twgl.resizeCanvasToDisplaySize(gl.canvas);
@@ -331,7 +329,7 @@ void main() {
       const camera = m4.lookAt(eye, target, up);
       const view = m4.inverse(camera);
       const viewProjection = m4.multiply(projection, view);
-      const world = m4.multiply(m4.scaling([zoom, zoom, zoom]), m4.rotationY(rot += (deltatime/1000.0)*rotationspeed));
+      const world = m4.multiply(m4.scaling([zoom, zoom, zoom]), m4.rotationY(rot += (deltatime/100000.0)*rotationspeed));
       
       uniforms.u_viewInverse = camera;
       uniforms.u_world = world;
