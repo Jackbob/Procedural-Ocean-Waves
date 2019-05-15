@@ -1,7 +1,7 @@
 # Procedural-Ocean-Waves
-A WebnGL project that procedurally generates an ocean wave scenery in a vertex shader. 
+A WebGL project that procedurally generates an ocean wave scenery in a vertex shader. 
 
-Created by Jakob Bertlin with boilerplate code from WebGL Fundementals as found in https://github.com/greggman/webgl-fundamentals
+Created by Jakob Bertlin with use of the very thin WebGL library TWGL as found in https://github.com/greggman/twgl.js/
 
 ## LICENSE 
 
