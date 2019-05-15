@@ -92,7 +92,7 @@
             <input type="checkbox" id="filter" /></div>
           <div>
               <label for="timescale">Time Scale</label>
-              <input type="range" min="-8" max="10" id="timescale"/>
+              <input type="range" min="-8" max="25" id="timescale"/>
           </div>
           <div>
             <label for="rotationspeed">Rotation Speed</label>
@@ -359,7 +359,7 @@ void main() {
     var oceanresolution = 251;
     generateOceanGrid(oceanresolution);
 
-    var zoom = 1;
+    var zoom =1;
     const ze = document.querySelector("#zoom");
     ze.value = zoom * 10;
     ze.addEventListener('input', e => {
@@ -373,7 +373,7 @@ void main() {
       rotationspeed = e.target.value;
     });
 
-    var timescale = 1;
+    var timescale = 8;
     const te = document.querySelector("#timescale");
     te.value = timescale;
     te.addEventListener('input', e => {
@@ -381,20 +381,20 @@ void main() {
       if(timescale < 0){timescale = 1.0 / Math.abs(timescale);}
     });
 
-    var waveamp = 0.003;
+    var waveamp = 0.006;
     const we = document.querySelector("#waveamp");
     we.value = waveamp * 10000;
     we.addEventListener('input', e => {
       waveamp = e.target.value / 10000;
     });
-    var coarseness = 0.0005;
+    var coarseness = 0.00065;
     const ce = document.querySelector("#coarseness");
     ce.value = coarseness * 50000;
     ce.addEventListener('input', e => {
       coarseness = e.target.value / 50000;
     });
 
-    var waveperiod = 0.25;
+    var waveperiod = 0.2;
     const wpe = document.querySelector("#waveperiod");
     wpe.value = waveperiod * 100;
     wpe.addEventListener('input', e => {
