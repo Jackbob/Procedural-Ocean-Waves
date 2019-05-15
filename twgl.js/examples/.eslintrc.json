@@ -1,8 +1,0 @@
-{
-  "parserOptions": {
-    "sourceType": "script"
-  },
-  "rules": {
-    "strict": [2, "global"]
-  }
-}
