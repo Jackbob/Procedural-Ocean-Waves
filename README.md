@@ -5,7 +5,7 @@ Created by Jakob Bertlin with use of the very thin WebGL library TWGL as found i
 
 # USAGE
 
-Step 1: Double click "webgl-waves.html"
+Step 1: Double click "webgl-waves.html" \
 Step 2: Profit
 
 ## LICENSE 
