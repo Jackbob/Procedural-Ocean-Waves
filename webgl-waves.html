@@ -140,8 +140,8 @@ varying vec3 v_normal;
 varying vec3 v_surfaceToLight;
 varying vec3 v_surfaceToView;
 
-float waterlevel = 0.0;        // height of the water
-float wavegain   = 1.0;       // change to adjust the general water wave level
+float waterHeightlevel = 0.0;        // height of the waterHeight
+float wavegain   = 1.0;       // change to adjust the general waterHeight wave level
 float large_waveheight = u_waveamp; // change to adjust the "heavy" waves (set to 0.0 to have a very still ocean :)
 mat2 m2 = mat2(1.6,-1.2,1.2,1.6);
 mat3 m = mat3( 0.00,  1.60,  1.20, -1.60,  0.72, -0.96, -1.20, -0.96,  1.28 );
@@ -185,7 +185,7 @@ float fbm( vec2 p )
   return f;
 }
 
-float water(vec2 p){
+float waterHeight(vec2 p){
   p *= 1000.0;
   float height = 0.0;
   float time = u_gametime*0.001;
@@ -222,13 +222,14 @@ float water(vec2 p){
 void main() {
   v_texCoord = texcoord;
   vec4 wavePos = position; 
-  //wavePos.y = water(wavePos.xz);
-  wavePos.y = water(wavePos.xz);
 
-  // calculate water normal
+  //Calculating water/wave height at position
+  wavePos.y = waterHeight(wavePos.xz);
+
+  // calculate waterHeight normal
   vec2 xdiff = vec2(0.01, 0.0);
   vec2 zdiff = vec2(0.0, 0.01);
-  v_normal = normalize(vec3(water(wavePos.xz-xdiff)*1000.0 - water(wavePos.xz+xdiff)*1000.0, 1.0, water(wavePos.xz-zdiff)*1000.0 - water(wavePos.xz+zdiff)*1000.0));  
+  v_normal = normalize(vec3(waterHeight(wavePos.xz-xdiff)*1000.0 - waterHeight(wavePos.xz+xdiff)*1000.0, 1.0, waterHeight(wavePos.xz-zdiff)*1000.0 - waterHeight(wavePos.xz+zdiff)*1000.0));  
 
   v_position = u_worldViewProjection * wavePos;
   v_normal = (u_worldInverseTranspose * vec4(v_normal, 0)).xyz;
