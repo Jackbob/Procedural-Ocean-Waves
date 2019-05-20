@@ -195,7 +195,7 @@ float waterHeight(vec2 p){
 
   // Larger ocean waves
   float wave = 0.0;
-  wave += sin((p.x*0.021  + shift2.x) * u_waveperiod)*4.5;
+  wave += sin((p.x*0.021  + shift2.x) * u_waveperiod)*5.5;
   wave += sin((p.x*0.0172+p.y*0.010 + shift2.x*1.121) * u_waveperiod )*4.0;
   wave -= sin((p.x*0.00104+p.y*0.005 + shift2.x*0.121 ) )*4.0;
   // Small waves/ripples on surfaces
@@ -367,7 +367,7 @@ void main() {
       zoom = e.target.value / 10;
     });
 
-    var rotationspeed = 1;
+    var rotationspeed = 0;
     const re = document.querySelector("#rotationspeed");
     re.value = rotationspeed;
     re.addEventListener('input', e => {
